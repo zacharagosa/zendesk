@@ -1,22 +1,64 @@
 view: tickets {
-  sql_table_name: looker_zendesk.tickets ;;
+  sql_table_name: zendesk.tickets_view ;;
+
+  set: ticket_drill {
+    fields: [id, assignee_email,  created_at_date, is_open, subject, requester_email]
+  }
 
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    link: {
+      label: "View ticket {{ value }} in Zendesk"
+      url: "https://zen-marketing-documentation.s3.amazonaws.com/docs/en/gsg_new_ticket_comment3.png"
+      icon_url: "http://www.looker.com/favicon.ico"
+    }
   }
 
   dimension: assignee_email {
     description: "the requester is the customer who initiated the ticket. the email is retrieved from the `users` table."
     sql: ${assignees.email} ;;
+    action: {
+      label: "Send Zendesk Followup Email"
+      url: "https://desolate-refuge-53336.herokuapp.com/posts"
+      icon_url: "https://sendgrid.com/favicon.ico"
+      form_param: {
+        name: "Subject"
+        type: string
+        required:  yes
+        default: "Following Up on Your Chat Support Conversation"
+      }
+      form_param: {
+        name: "Body"
+        type: textarea
+        required: yes
+        default:
+        "Hey Team,
+
+        I saw that you reached out to our support team. Is there anything I can do to help?
+
+        Thanks,
+        John Smith
+        Manager | Customer Success"
+      }
+      form_param: {
+        name: "Send Me a Copy"
+        type: select
+        default: "yes"
+        option: {
+          name: "yes"
+          label: "yes"
+        }
+      }
+    }
   }
 
   ## include only if your Zendesk application utilizes the assignee_id field
   dimension: assignee_id {
-    type: number
+    type: string
     value_format_name: id
-    sql: ${TABLE}.assignee_id ;;
+    sql: cast(${TABLE}.assignee_id as int64);;
   }
 
   #   - dimension: brand_id      ## include only if your Zendesk application utilizes the brand field
@@ -26,9 +68,22 @@ view: tickets {
 
   dimension_group: created_at {
     type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.created_at::timestamp ;;
+    timeframes: [time, date, week, month, raw]
+    sql: ${TABLE}.created_at;;
   }
+
+  dimension: ticket_age {
+    type: number
+    sql: DATE_DIFF(CURRENT_DATE(),${created_at_date}, day) ;;
+  }
+  dimension: ticket_age_tier {
+    label: "Ticket Age Tier (days)"
+    type: tier
+    tiers: [0, 1,7, 14, 21]
+    style: integer
+    sql: ${ticket_age};;
+  }
+
 
   dimension: group_id {
     type: number
@@ -61,20 +116,9 @@ view: tickets {
     description: "the requester is the customer who initiated the ticket"
     type: number
     value_format_name: id
-    sql: ${TABLE}.requester_id ;;
+    sql: cast(${TABLE}.requester_id as int64) ;;
   }
 
-  #   - dimension: satisfaction_rating__comment
-  #     type: string
-  #     sql: ${TABLE}.satisfaction_rating__comment
-  #
-  #   - dimension: satisfaction_rating__id
-  #     type: number
-  #     sql: ${TABLE}.satisfaction_rating__id
-  #
-  #   - dimension: satisfaction_rating__score
-  #     type: string
-  #     sql: ${TABLE}.satisfaction_rating__score
 
   dimension: status {
     type: string
@@ -100,14 +144,14 @@ view: tickets {
     sql: ${TABLE}.type ;;
   }
 
-  dimension: via__channel {
+  dimension: via_channel {
     type: string
-    sql: ${TABLE}.via__channel ;;
+    sql: ${TABLE}.subject ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [id, requester_email]
+    drill_fields: [ticket_drill*]
   }
 
   # ----- ADDITIONAL FIELDS -----
@@ -150,6 +194,7 @@ view: tickets {
       field: is_backlogged
       value: "Yes"
     }
+    drill_fields: [ticket_drill*]
   }
 
   measure: count_new_tickets {
@@ -159,6 +204,7 @@ view: tickets {
       field: is_new
       value: "Yes"
     }
+    drill_fields: [ticket_drill*]
   }
 
   measure: count_open_tickets {
@@ -168,6 +214,7 @@ view: tickets {
       field: is_open
       value: "Yes"
     }
+    drill_fields: [ticket_drill*]
   }
 
   measure: count_solved_tickets {
@@ -177,6 +224,7 @@ view: tickets {
       field: is_solved
       value: "Yes"
     }
+    drill_fields: [ticket_drill*]
   }
 
   measure: count_distinct_organizations {
@@ -200,7 +248,7 @@ view: tickets {
     type: time
     ###   use day_of_week
     timeframes: [day_of_week, hour_of_day]
-    sql: ${TABLE}.created_at::timestamp ;;
+    sql: ${TABLE}.created_at ;;
   }
 }
 

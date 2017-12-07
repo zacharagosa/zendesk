@@ -72,7 +72,7 @@
     explore: ticket_metrics
     dimensions: [organizations.name]
     measures: [tickets.count_open_tickets,
-      tickets.count_solved_tickets, tickets.count, ticket_metrics.avg_full_resolution_time_in_days__business]
+      tickets.count_solved_tickets, tickets.count, ticket_metrics.avg_full_resolution_time_in_days_business]
     sorts: [tickets.count_new_tickets desc]
     limit: 500
     listen:

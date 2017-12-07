@@ -1,10 +1,10 @@
 view: organizations {
-  sql_table_name: looker_zendesk.organizations ;;
+  sql_table_name: zendesk.organizations_view ;;
 
   dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}.id ;;
+    sql: cast( ${TABLE}.id as int64) ;;
   }
 
   dimension_group: created {

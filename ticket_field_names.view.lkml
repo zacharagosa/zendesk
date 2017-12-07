@@ -1,5 +1,5 @@
 view: ticket_fields {
-  sql_table_name: looker_zendesk.ticket_fields ;;
+  sql_table_name: looker_zendesk.ticket_fields_view ;;
 
   dimension: id_field_name {
     primary_key: yes

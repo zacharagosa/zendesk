@@ -1,10 +1,10 @@
 view: users {
-  sql_table_name: looker_zendesk.users ;;
+  sql_table_name: zendesk.users_view ;;
 
   dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}.id ;;
+    sql: cast(${TABLE}.id as int64) ;;
   }
 
   dimension: active {

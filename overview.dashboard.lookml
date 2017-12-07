@@ -73,7 +73,7 @@
     type: looker_pie
     model: zendesk
     explore: ticket_metrics
-    dimensions: [tickets.via__channel]
+    dimensions: [tickets.via_channel]
     measures: [tickets.count]
     sorts: [tickets.count desc]
     limit: 500
@@ -197,17 +197,17 @@
       date: tickets.created_at_date
 
 
-# INCLUDE ONLY IF TICKET TAGS ARE USED AND 'ticket__tags' IS INCLUDED AS AN EXPLORE FILE
+# INCLUDE ONLY IF TICKET TAGS ARE USED AND 'ticket_tags' IS INCLUDED AS AN EXPLORE FILE
 
 #   - name: ticket_tags
 #     title: Ticket tags
 #     type: looker_column
 #     model: zendesk
-#     explore: ticket__tags
-#     dimensions: [ticket__tags.value, ticket__tags.created_at_month]
-#     pivots: [ticket__tags.value]
-#     measures: [ticket__tags.count]
-#     sorts: [ticket__tags.created_at_month desc, ticket__tags.value]
+#     explore: ticket_tags
+#     dimensions: [ticket_tags.value, ticket_tags.created_at_month]
+#     pivots: [ticket_tags.value]
+#     measures: [ticket_tags.count]
+#     sorts: [ticket_tags.created_at_month desc, ticket_tags.value]
 #     limit: 500
 #     column_limit: 50
 #     stacking: percent
@@ -229,17 +229,17 @@
 #     show_null_labels: false
 #     colors: ['#FFCC00', '#1E2023', '#3399CC', '#CC3399', '#66CC66', '#999999', '#FF4E00', '#A2ECBA', '#9932CC', '#0000CD']
 #     listen:
-#       date: ticket__tags.created_at_date
+#       date: ticket_tags.created_at_date
 
 #   - name: ticket_tags
 #     title: Ticket tags
 #     type: looker_column
 #     model: zendesk
-#     explore: ticket__tags
-#     dimensions: [ticket__tags.value, ticket__tags.created_at_month]
-#     pivots: [ticket__tags.value]
-#     measures: [ticket__tags.count]
-#     sorts: [ticket__tags.created_at_month desc, ticket__tags.value]
+#     explore: ticket_tags
+#     dimensions: [ticket_tags.value, ticket_tags.created_at_month]
+#     pivots: [ticket_tags.value]
+#     measures: [ticket_tags.count]
+#     sorts: [ticket_tags.created_at_month desc, ticket_tags.value]
 #     limit: 500
 #     column_limit: 50
 #     stacking: percent
@@ -261,4 +261,4 @@
 #     show_null_labels: false
 #     colors: ['#FFCC00', '#1E2023', '#3399CC', '#CC3399', '#66CC66', '#999999', '#FF4E00', '#A2ECBA', '#9932CC', '#0000CD']
 #     listen:
-#       date: ticket__tags.created_at_date
+#       date: ticket_tags.created_at_date

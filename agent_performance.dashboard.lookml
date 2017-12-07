@@ -27,8 +27,8 @@
     type: single_value
     model: zendesk
     explore: ticket_metrics
-    measures: [ticket_metrics.avg_first_resolution_time_in_days__business]
-    sorts: [ticket_metrics.avg_first_resolution_time_in_days__business desc]
+    measures: [ticket_metrics.avg_first_resolution_time_in_days_business]
+    sorts: [ticket_metrics.avg_first_resolution_time_in_days_business desc]
     limit: 500
     show_single_value_title: true
     show_comparison: false
@@ -42,8 +42,8 @@
     type: single_value
     model: zendesk
     explore: ticket_metrics
-    measures: [ticket_metrics.avg_reply_time_in_hours__business]
-    sorts: [ticket_metrics.avg_reply_time_in_hours__business desc]
+    measures: [ticket_metrics.avg_reply_time_in_hours_business]
+    sorts: [ticket_metrics.avg_reply_time_in_hours_business desc]
     limit: 500
     show_single_value_title: true
     show_comparison: false
@@ -72,8 +72,8 @@
     model: zendesk
     explore: ticket_metrics
     dimensions: [ticket_metrics.group_name]
-    measures: [ticket_metrics.count, ticket_metrics.avg_first_resolution_time_in_days__business,
-      ticket_metrics.avg_reply_time_in_hours__business]
+    measures: [ticket_metrics.count, ticket_metrics.avg_first_resolution_time_in_days_business,
+      ticket_metrics.avg_reply_time_in_hours_business]
     sorts: [ticket_metrics.count desc]
     limit: 500
     column_limit: 50
@@ -105,8 +105,8 @@
     model: zendesk
     explore: ticket_metrics
     dimensions: [ticket_metrics.created_week]
-    measures: [ticket_metrics.count, ticket_metrics.avg_reply_time_in_hours__business,
-      ticket_metrics.avg_first_resolution_time_in_days__business]
+    measures: [ticket_metrics.count, ticket_metrics.avg_reply_time_in_hours_business,
+      ticket_metrics.avg_first_resolution_time_in_days_business]
     sorts: [ticket_metrics.count desc]
     limit: 500
     column_limit: 50
@@ -141,8 +141,8 @@
     model: zendesk
     explore: ticket_metrics
     dimensions: [ticket_metrics.assignee_email]
-    measures: [tickets.count_solved_tickets, ticket_metrics.avg_reply_time_in_hours__business,
-      ticket_metrics.avg_first_resolution_time_in_days__business]
+    measures: [tickets.count_solved_tickets, ticket_metrics.avg_reply_time_in_hours_business,
+      ticket_metrics.avg_first_resolution_time_in_days_business]
     sorts: [tickets.count_solved_tickets desc]
     limit: 500
     column_limit: 50

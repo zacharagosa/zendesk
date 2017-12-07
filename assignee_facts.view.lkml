@@ -8,8 +8,8 @@ view: ticket_assignee_facts {
         , count(*) as lifetime_tickets
         , min(created_at) as first_ticket
         , max(created_at) as latest_ticket
-        , 1.0 * COUNT(*)/NULLIF(DATEDIFF(day,MIN(created_at),CURRENT_DATE),0) AS avg_tickets_per_day
-      FROM zendesk._tickets
+       , 1.0 * COUNT(*)/NULLIF(DATE_DIFF(CAST(MIN(created_at) AS DATE),CURRENT_DATE(), day),0) AS avg_tickets_per_day
+      FROM zendesk.tickets_view
       GROUP BY 1
        ;;
   }
